@@ -1,0 +1,53 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+
+<a href="#" onclick="" data-link="https://files.musicfeed.ir/2019/05/7-rings-ARIANA-GRANDE-128.mp3">play 7rings</a>
+<a href="#" onclick="" data-link="https://dl.naslemusic.com/music/1401/01/Amir Tataloo - Boht (128-Naslemusic).mp3">play boht</a>
+
+
+    <audio id="audio" controls="controls">
+        <source id="music" src=""></source>
+    </audio>
+    <p id="time"></p>
+
+    <input type="text" onchange="set_time();" id="time-input">
+
+    <script>
+
+        const collection = document.getElementsByTagName("a");
+        for (let i = 0; i < collection.length; i++) {
+        collection[i].addEventListener("click", function(event){
+
+            var audio = document.getElementById('audio');
+            var music = document.getElementById('music');
+            music.src = collection[i].getAttribute('data-link')
+            
+            audio.load()
+            audio.play()
+
+        });
+        }
+
+        var audio = document.getElementById('audio');
+        
+        audio.ontimeupdate = function() {show_time()};
+        function show_time()
+        {
+            document.getElementById("time").innerHTML = parseInt(audio.currentTime);
+        }
+        function set_time()
+        {
+            audio.currentTime = document.getElementById('time-input').value
+        }
+
+    </script>
+
+
+<script src="client.js"></script>
+
+</body>
+</html>
