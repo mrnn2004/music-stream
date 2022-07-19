@@ -1,27 +1,20 @@
-import websockets
+#!/usr/bin/env python
+
 import asyncio
+import websockets
+
+port = 3000
 
 
+print('server is listening on port '+str(port))
+async def echo(websocket):
+    print('A client just connected')
+    async for message in websocket:
+        print(message)
+        await websocket.send('hello client')
 
-PORT = 3000
+async def main():
+    async with websockets.serve(echo, "localhost", port):
+        await asyncio.Future()  # run forever
 
-print(str(PORT))
-    
-
-print("Server listening on Port " + str(PORT))
-
-async def echo(websocket, path):
-    print("A client just connected")
-
-    try:
-        async for message in websocket:
-            print(message)
-            await websocket.send("message received")
-
-    except websockets.exceptions.ConnectionClosed as e:
-        print("A client just disconnected")
-
-start_server = websockets.serve(echo, "localhost", PORT)
-
-asyncio.get_event_loop().run_until_complete(start_server)
-asyncio.get_event_loop().run_forever()
+asyncio.run(main())
