@@ -16,7 +16,7 @@ async def echo(websocket, path):
     try:
         async for message in websocket:
             print(message)
-            await websocket.send("shot")
+            await websocket.send("message received")
 
     except websockets.exceptions.ConnectionClosed as e:
         print("A client just disconnected")
